@@ -9,7 +9,7 @@ p2 :
 	gcc -o run -fopenmp problem_2.c
 	
 p3 :
-	gcc -o run -fopenmp problem_3.c
+	gcc -o run -fopenmp matmul.c
 	
 p4 :
 	gcc -o run -fopenmp problem_4.c
