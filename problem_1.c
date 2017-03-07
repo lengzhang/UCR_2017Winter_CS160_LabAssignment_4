@@ -2,29 +2,39 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static long num_steps = 100000;
-double step;
+static long num_steps = 971;
 
 int main (int argc, char *argv[])
 {
-    double begin = omp_get_wtime();
+    //omp_set_num_threads(2);
     
+    double sum = 0.0;
+    double step = 1.0 / (double) num_steps;
+    int num_threads = omp_get_max_threads();
+    
+    double begin_time = omp_get_wtime();
     #pragma omp parallel
     {
-        int i;
-        double x, pi, sum = 0.0;
+        int id = omp_get_thread_num();
+        int begin = id * num_steps / num_threads;
+        int end = (id + 1) * num_steps / num_threads;
         
-        step = 1.0 / (double) num_steps;
-        
-        for (i = 0; i < num_steps; i++)
+        if (id == num_threads - 1)
         {
-            x = (i + 0.5) * step;
-            sum += 4.0 / (1.0 + x * x);
+            end = num_steps;
         }
-        pi = step * sum;
+        double x, y = 0.0;
         
-        printf("%d/%d:\t pi = %f\n", omp_get_thread_num(), omp_get_num_threads(),pi);
+        for (begin; begin < end; begin++)
+        {
+            x = (begin + 0.5) * step;
+            y += 4.0 / (1.0 + x * x);
+        }
+        sum += y;
     }
     
-    printf("Running time: %f\n", omp_get_wtime() - begin);
+    double pi = step * sum;
+    printf("pi = %f\n", pi);
+    
+    printf("Running time: %f\n", omp_get_wtime() - begin_time);
 }
