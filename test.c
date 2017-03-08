@@ -4,20 +4,16 @@
 
 int main (int argc, char *argv[])
 {
-    int nthreads, tid;
-    
-    /* Fork a team of threads giving them their own copies of variables */
-    #pragma omp parallel private(nthreads, tid)
+    int i, j, k;
+    #pragma omp parallel for private(j) num_threads(3)
+    for (i = 0; i < 5; i++)
     {
-        /* Obtain thread number */
-        tid = omp_get_thread_num();
-        printf("Hello World from thread = %d\n", tid);
-        
-        /* Only master thread does this */
-        if (tid == 0) 
+        int id_i = omp_get_thread_num();
+        #pragma omp parallel for num_threads(3)
+        for (j = 0; j < 5; j++)
         {
-            nthreads = omp_get_num_threads();
-            printf("Number of threads = %d\n", nthreads);
+            int id_j = omp_get_thread_num();
+            printf("i: %d\tj: %d\t%d - %d\n", id_i, id_j, i, j);
         }
-    } /* All threads join master thread and disband */
+    }
 }
