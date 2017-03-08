@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static long num_steps = 971;
+static long num_steps = 100000;
 
 int main (int argc, char *argv[])
 {
