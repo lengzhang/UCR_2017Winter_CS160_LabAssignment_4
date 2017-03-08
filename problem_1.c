@@ -41,4 +41,5 @@ int main (int argc, char *argv[])
         run_time = omp_get_wtime() - start_time;
         printf("pi is %f in %f seconds with %d threads\n", pi, run_time, i);
     }
+    return 0;
 }
