@@ -6,9 +6,20 @@ int MAX = 10;
 
 int main (int argc, char *argv[])
 {
+    /* original
     int i, j, a[MAX];
     j=1;
     #pragma omp parallel for
+    for (i=0; i<MAX; i++) {
+        j=j+2;
+        a[i]=comp(j);
+    }
+    */
+    
+    // fix
+    int i, j, a[MAX];
+    j=1;
+    #pragma omp parallel for private(j)
     for (i=0; i<MAX; i++) {
         j=j+2;
         printf("1:\t%d\t%d - %d\n", omp_get_thread_num(), i, j);
@@ -23,3 +34,9 @@ int main (int argc, char *argv[])
     }
     printf("\n");
 }
+
+/*
+Answer:
+    
+
+*/

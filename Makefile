@@ -1,25 +1,23 @@
-object = && ./run
-
 test :
-	gcc -o run -fopenmp test.c $(object)
+	gcc -o run -fopenmp test.c
 	
 p1 :
-	gcc -o run -fopenmp problem_1.c $(object)
+	gcc -o run -fopenmp problem_1.c
 	
 p2 :
-	gcc -o run -fopenmp problem_2.c $(object)
+	gcc -o run -fopenmp problem_2.c
 	
 p3 :
-	gcc -o run -fopenmp matmul.c $(object)
+	gcc -o run -fopenmp matmul.c
 	
 p4 :
-	gcc -o run -fopenmp problem_4.c $(object)
+	gcc -o run -fopenmp problem_4.c
 	
 p5 :
-	gcc -o run -fopenmp problem_5.c $(object)
+	gcc -o run -fopenmp problem_5.c
 	
 p6 :
-	gcc -o run -fopenmp problem_6.c $(object)
+	gcc -o run -fopenmp problem_6.c
 	
 .PHONY : clean
 clean  :
