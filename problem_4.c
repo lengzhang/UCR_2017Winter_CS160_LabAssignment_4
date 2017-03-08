@@ -2,22 +2,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int MAX = 10;
+
 int main (int argc, char *argv[])
 {
-    int nthreads, tid;
+    int i, j, a[MAX];
+    j=1;
+    #pragma omp parallel for
+    for (i=0; i<MAX; i++) {
+        j=j+2;
+        printf("1:\t%d\t%d - %d\n", omp_get_thread_num(), i, j);
+        a[i]=j;
+        printf("2:\t%d\t%d - %d\n", omp_get_thread_num(), i, j);
+    }
     
-    /* Fork a team of threads giving them their own copies of variables */
-    #pragma omp parallel private(nthreads, tid)
+    for (i=0; i<MAX; i++)
     {
-        /* Obtain thread number */
-        tid = omp_get_thread_num();
-        printf("Hello World from thread = %d\n", tid);
-        
-        /* Only master thread does this */
-        if (tid == 0) 
-        {
-            nthreads = omp_get_num_threads();
-            printf("Number of threads = %d\n", nthreads);
-        }
-    } /* All threads join master thread and disband */
+        printf("%d - %d\t", i, a[i]);
+    }
+    printf("\n");
 }
