@@ -37,10 +37,8 @@ int main (int argc, char *argv[])
 
 /*
 Answer:
-    No because this code segment will cause race problem.
-    Before thread A reaches to a[i]=comp(j), another
-    thread reaches to j=j+2. Therefore, when thread A
-    reaches to a[i]=comp(j), the value of j is not the
-    value thread want.
-
+    No because this code segment will cause race problem. Before thread A
+    reaches to a[i]=comp(j), another thread reaches to j=j+2. Therefore, when
+    thread A reaches to a[i]=comp(j), the value of j is not the value thread
+    want.
 */
