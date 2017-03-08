@@ -40,10 +40,13 @@ int main()
     //////////////////////////////////////////////////////////////////////////////////////
     // please change this into a parallel version
 	gettimeofday(&start, NULL);
+	
+	#pragma omp parallel for private(j, k) num_threads(10)
 	for(i=0; i<N; i++)
 	  for(j=0; j<N; j++)
 		for(k=0; k<N; k++)
 		  Cp[i*N+j]+=A[i*N+k]*B[k*N+j];
+		  
 	gettimeofday(&end, NULL);
 
 	timeCost=1000000*(end.tv_sec-start.tv_sec)+(end.tv_usec-start.tv_usec);
