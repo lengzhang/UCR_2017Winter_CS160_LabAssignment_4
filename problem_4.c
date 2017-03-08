@@ -17,17 +17,7 @@ int MAX = 10;
 
 int main (int argc, char *argv[])
 {
-    /* original
-    int i, j, a[MAX];
-    j=1;
-    #pragma omp parallel for
-    for (i=0; i<MAX; i++) {
-        j=j+2;
-        a[i]=comp(j);
-    }
-    */
-    
-    // fix
+    //  test
     int i, j, a[MAX];
     j=1;
     #pragma omp parallel for
