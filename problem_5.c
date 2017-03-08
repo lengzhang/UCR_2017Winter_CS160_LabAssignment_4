@@ -46,6 +46,9 @@ int main (int argc, char *argv[])
     //      of b in each thread is unknow.
     //      (Global variable will be initialized automatically, and local
     //      variable will not be initialized automatically.)
+    //
+    //      Reference about initialize rule:
+    //      http://billhoo.blog.51cto.com/2337751/733279
     #pragma omp parallel private(b)
     {
         printf("%d - 1\tb = %d\n", omp_get_thread_num(), b);
