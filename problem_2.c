@@ -8,31 +8,42 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static long num_steps = 99999;
+static long num_steps = 100000;
 
 int main (int argc, char *argv[])
 {
-    double begin_time = omp_get_wtime();
+    double pi, full_sum;
+    double step = 1.0 / (double) num_steps;
+    double start_time, run_time;
     
-    //omp_set_num_threads(2);
     int i;
-    double sum[omp_get_max_threads()];
-    for (i=0; i < omp_get_max_threads(); i++) {
-        sum[i] = 0.0;
-    }
-    
-    #pragma omp parallel for
-    for (i = 0; i < num_steps; i++)
+    for (i = 1; i <= 8; i++)
     {
-        double x = (i + 0.5) / (double) num_steps;
-        sum[omp_get_thread_num()] += 4.0 / (1.0 + x * x);
+        start_time = omp_get_wtime();
+        omp_set_num_threads(i);
+        full_sum = 0.0;
+        
+        int j;
+        double sum[i];
+        for (j = 0; j < i; j++) {
+            sum[j] = 0.0;
+        }
+        
+        #pragma omp parallel for
+        for (j = 0; j < num_steps; j++)
+        {
+            double x = (j + 0.5) / (double) num_steps;
+            sum[omp_get_thread_num()] += 4.0 / (1.0 + x * x);
+        }
+        
+        for (j = 0; j < i; j++)
+        {
+            full_sum += sum[j];
+        }
+        
+        pi = full_sum * step;
+        run_time = omp_get_wtime() - start_time;
+        printf("pi is %f in %f seconds with %d with threads\n", pi, run_time, i);
     }
-    double total = 0.0;
-    for (i=0; i < omp_get_max_threads(); i++) {
-        total += sum[i];
-    }
-    double pi = total / (double) num_steps;
-    printf("pi = %f\n", pi);
-    
-    printf("Running time: %f\n", omp_get_wtime() - begin_time);
+    return 0;
 }
