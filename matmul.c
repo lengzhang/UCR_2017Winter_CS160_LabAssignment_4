@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <sys/time.h>
 
-#define N 100
+#define N 1000
 
 int initialize(double * matrix);
 int _initialize(double * matrix);
@@ -45,8 +45,10 @@ int main()
     //////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////
     // please change this into a parallel version
+    int num_threads = 2;
+	omp_set_num_threads(num_threads);
 	gettimeofday(&start, NULL);
-	#pragma omp parallel for private(j, k) num_threads(10)
+	#pragma omp parallel for private(j, k)
 	for(i=0; i<N; i++)
 	{
 	  for(j=0; j<N; j++)
@@ -61,7 +63,7 @@ int main()
 
 	timeCost=1000000*(end.tv_sec-start.tv_sec)+(end.tv_usec-start.tv_usec);
 	timeCost/=1000000;
-	printf("The parallel version of matrix multiplication costs %lf seconds\n", timeCost);
+	printf("The parallel version of matrix multiplication costs %lf seconds with %d threads\n", timeCost, num_threads);
     //////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////
 	
