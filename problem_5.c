@@ -1,3 +1,13 @@
+/*
+    Consider the following OpenMP program segment.
+    
+    int a=1, b=2, c=3, d=4;
+        …
+    #pagama omp parallel private(b), firstprivate(c) lastprivate(d)
+    {
+        …
+    }
+*/
 #include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>

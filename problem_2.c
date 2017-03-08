@@ -1,3 +1,9 @@
+/*
+    Create a parallel version of the pi program using a loop construct. Your
+    goal is to minimize the number changes made to the serial program. Please
+    use the OpenMP runtime library routine omp_get_wtime() to measure the
+    execution time of the computational section in the program.
+*/
 #include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>

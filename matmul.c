@@ -1,3 +1,9 @@
+/*
+	Parallelize the matrix multiplication program in the file matmul.c attached.
+	Can you optimize the program by playing with how the loops are scheduled?
+	Please use the OpenMP runtime library routine omp_get_wtime() to measure the
+	execution time of the computational section in the program.
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>

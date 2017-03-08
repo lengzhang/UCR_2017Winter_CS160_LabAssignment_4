@@ -1,3 +1,8 @@
+/*
+    Create a parallel version of the pi program using a parallel construct.
+    Please use the OpenMP runtime library routine omp_get_wtime() to measure the
+    execution time of the computational section in the program.
+*/
 #include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>

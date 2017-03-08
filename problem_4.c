@@ -1,3 +1,14 @@
+/*
+    Does the following OpenMP code segment parallelize the for-loop correctly or not? Why?
+
+    int i, j, a[MAX];
+    j=1;
+    #pragma omp parallel for
+    for (i=0; i<MAX; i++) {
+        j=j+2;
+        a[i]=comp(j);
+    }
+*/
 #include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>
