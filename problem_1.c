@@ -13,33 +13,32 @@ int main (int argc, char *argv[])
 {
     //omp_set_num_threads(2);
     
-    double sum = 0.0;
+    double pi, full_sum;
     double step = 1.0 / (double) num_steps;
-    int num_threads = omp_get_max_threads();
+    double start_time, run_time;
     
-    double begin_time = omp_get_wtime();
-    #pragma omp parallel
+    int i;
+    for (i = 1; i <= 8; i++)
     {
-        int id = omp_get_thread_num();
-        int begin = id * num_steps / num_threads;
-        int end = (id + 1) * num_steps / num_threads;
-        
-        if (id == num_threads - 1)
+        start_time = omp_get_wtime();
+        omp_set_num_threads(i);
+        full_sum = 0.0;
+        #pragma omp parallel
         {
-            end = num_steps;
+            int id = omp_get_thread_num();
+            int num_threads = omp_get_num_threads();
+            double x, sum = 0.0;
+            
+            int j;
+            for (j = id; j < num_steps; j += num_threads)
+            {
+                x = (j + 0.5) * step;
+                sum = sum + 4.0 / (1.0 + x * x);
+            }
+            full_sum += sum;
         }
-        double x, y = 0.0;
-        
-        for (begin; begin < end; begin++)
-        {
-            x = (begin + 0.5) * step;
-            y += 4.0 / (1.0 + x * x);
-        }
-        sum += y;
+        pi = step * full_sum;
+        run_time = omp_get_wtime() - start_time;
+        printf("pi is %f in %f seconds with %d threads\n", pi, run_time, i);
     }
-    
-    double pi = step * sum;
-    printf("pi = %f\n", pi);
-    
-    printf("Running time: %f\n", omp_get_wtime() - begin_time);
 }
