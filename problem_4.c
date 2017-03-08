@@ -19,12 +19,12 @@ int main (int argc, char *argv[])
     // fix
     int i, j, a[MAX];
     j=1;
-    #pragma omp parallel for private(j)
+    #pragma omp parallel for
     for (i=0; i<MAX; i++) {
         j=j+2;
-        printf("1:\t%d\t%d - %d\n", omp_get_thread_num(), i, j);
+        printf("%d - 1\t%d - %d\n", omp_get_thread_num(), i, j);
         a[i]=j;
-        printf("2:\t%d\t%d - %d\n", omp_get_thread_num(), i, j);
+        printf("%d - 2\t%d - %d\n", omp_get_thread_num(), i, j);
         
     }
     
@@ -37,6 +37,10 @@ int main (int argc, char *argv[])
 
 /*
 Answer:
-    
+    No because this code segment will cause race problem.
+    Before thread A reaches to a[i]=comp(j), another
+    thread reaches to j=j+2. Therefore, when thread A
+    reaches to a[i]=comp(j), the value of j is not the
+    value thread want.
 
 */
