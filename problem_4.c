@@ -14,6 +14,7 @@ int main (int argc, char *argv[])
         printf("1:\t%d\t%d - %d\n", omp_get_thread_num(), i, j);
         a[i]=j;
         printf("2:\t%d\t%d - %d\n", omp_get_thread_num(), i, j);
+        
     }
     
     for (i=0; i<MAX; i++)
