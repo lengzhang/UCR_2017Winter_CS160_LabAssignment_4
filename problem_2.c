@@ -22,26 +22,32 @@ int main (int argc, char *argv[])
         start_time = omp_get_wtime();
         omp_set_num_threads(i);
         full_sum = 0.0;
+        double sum = 0.0;
         
         int j;
+        /*
         double sum[i];
         for (j = 0; j < i; j++) {
             sum[j] = 0.0;
         }
+        */
         
-        #pragma omp parallel for
+        #pragma omp parallel for reduction(+:sum)
         for (j = 0; j < num_steps; j++)
         {
             double x = (j + 0.5) / (double) num_steps;
-            sum[omp_get_thread_num()] += 4.0 / (1.0 + x * x);
+            //sum[omp_get_thread_num()] += 4.0 / (1.0 + x * x);
+            sum += 4.0 / (1.0 + x * x);
         }
         
+        /*
         for (j = 0; j < i; j++)
         {
             full_sum += sum[j];
         }
+        */
         
-        pi = full_sum * step;
+        pi = sum * step;
         run_time = omp_get_wtime() - start_time;
         printf("pi is %f in %f seconds with %d with threads\n", pi, run_time, i);
     }
