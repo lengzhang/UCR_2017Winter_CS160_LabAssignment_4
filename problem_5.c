@@ -15,11 +15,11 @@
 int main (int argc, char *argv[])
 {
     int a = 1, b = 2, c = 3, d = 4, i;
-    omp_set_num_threads(4);
+    omp_set_num_threads(10);
     
     // (a)  a is shared in the parallel region
-    // (b)  The initial value of a for each thread will be the value in main
-    //      thread.
+    // (b)  The initial value of a for each thread will be the current value of
+    //      variable a.
     #pragma omp parallel
     {
         printf("%d - 1\ta = %d\n", omp_get_thread_num(), a);

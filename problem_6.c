@@ -52,7 +52,7 @@
         thread A cannot be accessed by other thread.
 */
 #include <stdio.h>
-#define MAX_THREADS 4
+#define MAX_THREADS 10
 static long num_steps = 100000000;
 double step;
 int main ()
@@ -66,7 +66,7 @@ int main ()
         omp_set_num_threads(j);
         full_sum = 0.0;
         start_time = omp_get_wtime();
-        #pragma omp parallel private(i)
+        #pragma omp parallel shared(num_steps, step, full_sum) private(i) reduction(+:x)
         {
             int id = omp_get_thread_num();
             int numthreads = omp_get_num_threads();
