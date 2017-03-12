@@ -44,12 +44,12 @@
         Shared:     num_steps   step    i   full_sum    x
         Private:    id  numthreads  partial_sum
         
-        Since the variable i is a shared variable, each thread will access the
-        same variable i. This causes race problem, so the final result pi will
-        not approximate to 3.14 when more than 1 thread in parallel. For this
-        problem, seting the variable i to be private can avoid race problem
-        because each thread has own copy of i. Therefore, the variable i of
-        thread A cannot be accessed by other thread.
+        Since the variable i and x are shared variables, each thread will access
+        the same variable i and x. This causes race problem, so the final result
+        pi will not approximate to 3.141593.
+        For this problem, seting the variable i and x to be private can avoid
+        race problem because each thread has own copy of i and x. Therefore, the
+        variable i and x of thread A cannot be accessed by other thread.
 */
 #include <stdio.h>
 #define MAX_THREADS 10
@@ -66,7 +66,7 @@ int main ()
         omp_set_num_threads(j);
         full_sum = 0.0;
         start_time = omp_get_wtime();
-        #pragma omp parallel shared(num_steps, step, full_sum) private(i) reduction(+:x)
+        #pragma omp parallel shared(num_steps, step, full_sum) private(i, x)
         {
             int id = omp_get_thread_num();
             int numthreads = omp_get_num_threads();
